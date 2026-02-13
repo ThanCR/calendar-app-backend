@@ -45,9 +45,7 @@ const crearUsuario = async (req, res = response) => {
 }
 
 const loginUsuario = async (req, res) => {
-
     const { email, password } = req.body
-
     try {
         let usuario = await Usuario.findOne({ email })
 
@@ -57,18 +55,14 @@ const loginUsuario = async (req, res) => {
                 msg: 'Las credenciales no son validas o el usuario no existe',
             })
         }
-
         const validarPassword = bcrypt.compareSync(password, usuario.password)
-
         if (!validarPassword) {
             return res.status(400).json({
                 ok: true,
                 msg: 'Credenciales incorrectas',
             })
         }
-
         const token = await generarJWT( usuario._id, usuario.name)
-
         return res.status(200).json({
             ok: true,
             _id: usuario._id,
@@ -76,8 +70,6 @@ const loginUsuario = async (req, res) => {
             name: usuario.name,
             token
         })
-
-
     } catch (error) {
         console.log(error)
         res.json({
@@ -87,15 +79,11 @@ const loginUsuario = async (req, res) => {
             password,
         })
     }
-
-
 }
 
 const revalidarToken = async (req, res) => {
-
     const {uid, name} = req.uid
     const token = await generarJWT( uid, name)
-
     res.json({
         ok: true,
         msg: 'revalidacion de token',

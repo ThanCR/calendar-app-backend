@@ -12,6 +12,7 @@ app.use(express.static('public'))
 app.use( express.json() )
 
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/event', require('./routes/events'))
 
 app.listen( process.env.PORT, () => {
     console.log(`Servidor corriendo en el puerto ${process.env.PORT}`)
